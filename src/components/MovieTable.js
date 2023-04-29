@@ -1,6 +1,12 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useTable } from "react-table";
 import MovieDetails from "./MovieDetails";
+import AddMovieModal from "./AddMovie";
+import { Modal } from 'antd';
+
+
+import { Button, message, Popconfirm } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 
 const MovieTable = () => {
@@ -9,6 +15,8 @@ const MovieTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [editingMovie, setEditingMovie] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -56,7 +64,7 @@ const MovieTable = () => {
           <>
             <button onClick={() => handleView(row)}>View</button>
             <button onClick={() => handleEdit(row)}>Edit</button>
-            <button onClick={() => handleDelete(row)}>Delete</button>
+             <button onClick={() => handleDeleteClick(row)} > Delete</button>
           </>
         ),
       },
@@ -91,10 +99,40 @@ const MovieTable = () => {
     setSelectedMovie(null);
   };
 
-  const handleDelete = (row) => {
-    // Handle delete action for the selected movie
+  const handleDeleteClick = (row) => {
+    Modal.confirm({
+      title: 'Are you sure you want to delete this movie?',
+      icon: <ExclamationCircleOutlined />,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        handleDelete(row);
+      },
+    });
   };
 
+
+  const handleDelete = async (row) => {
+    try {
+      const response = await fetch(
+        `https://localhost:44311/api/services/app/Movie/Delete?Id=${row.original.id}`,
+        { method: 'DELETE' }
+      );
+      if (!response.ok) {
+        throw new Error('Failed to delete movie');
+      }
+      setMovies((prevMovies) => prevMovies.filter((movie) => movie.id !== row.original.id));
+      message.success('Movie deleted successfully');
+    } catch (error) {
+      console.error(error);
+      message.error('Failed to delete movie');
+    }
+  };
+  const handleAdd = () => {
+
+    setShowModal(true);
+  };
 
   const tableInstance = useTable({ columns, data: filteredMovies });
 
@@ -106,8 +144,9 @@ const MovieTable = () => {
         <h1 style={{  display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES</h1>
 
         <div style={{  display: "flex", justifyContent: "center", marginTop: "30px" }}>
-        <div>
-          <button style={{marginRight: "30px" }}> Add </button>
+        <div showModal >
+        <button style={{ marginRight: "30px" }}  onClick={handleAdd}>{<AddMovieModal />}</button>
+      
         </div>
         <div style={{marginRight: "50px" }}>
           <label htmlFor="search">Search:</label>
@@ -124,6 +163,8 @@ const MovieTable = () => {
             <option value="Thriller">Thriller</option>
           </select>
         </div>
+
+      
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         {selectedMovie ? (

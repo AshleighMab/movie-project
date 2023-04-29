@@ -1,71 +1,84 @@
-import React, { useState } from "react";
+import { useState } from 'react';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import MovieTable from './MovieTable';
+import './loginStyle.css'; // import your CSS file here\
+import LoginRegisterToggle from './LoginRegisterToggle';
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function Login({ onFormSwitch }) {
+  const [loading, setLoading] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onFinish = async (values) => {
+    setLoading(true);
 
-    try {
-      const result = await fetch("https://localhost:44311/api/services/app/Person/CreatePerson", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+    // Make an API call to verify the user's credentials
+    const response = await fetch('https://localhost:44311/api/TokenAuth/Authenticate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    }).then((response) => {
+      if (response.ok) {
+        console.log(response);
+        console.log(response.accessToken);
+        localStorage.setItem("objLogin", JSON.stringify(response));
+        setAuthenticated(true);
+      } else {
+        console.log("Buy");
+        alert("Failed to Login!!! Please check your email or password");
+      }
+    });
 
-      const data = await result.json();
-
-      console.log(data); // do something with the API response
-    } catch (error) {
-      console.error(error);
-    }
+    setLoading(false);
   };
 
   return (
-    <div style={{ background: "#3f0f3f", height: "100vh" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="username" style={{ color: "#fff", display: "block" }}>
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter your username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={{ marginBottom: "10px", padding: "10px" }}
-          />
+    <div>
+      {isLoginForm}
+      {authenticated ? (
+        <MovieTable />
+      ) : (
+        <div className="form-container">
+          <Form
+            name="normal_login"
+            className="login-form"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            style={{ border: "1px solid blue" }}
+          >
+            <Form.Item
+              name="UserNameOrEmailAddress"
+              rules={[{ required: true, message: 'Please input your Email!' }]}
+            >
+              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[{ required: true, message: 'Please input your Password!' }]}
+            >
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="Password"
+              />
+            </Form.Item>
 
-          <label htmlFor="password" style={{ color: "#fff", display: "block" }}>
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ marginBottom: "10px", padding: "10px" }}
-          />
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
+                Log in
+              </Button>
 
-          <button type="submit" style={{ padding: "10px 20px" }}>
-            Submit
-          </button>
-        </form>
-      </div>
+              <Button type="link" onClick={() => onFormSwitch("signup")}>
+                Register
+              </Button>
+
+            </Form.Item>
+          </Form>
+        </div>
+      )}
     </div>
   );
 };

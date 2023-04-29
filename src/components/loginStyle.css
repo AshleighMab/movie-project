@@ -1,0 +1,13 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-form {
+    justify-content: center;
+    width: 500px;
+    padding: 50px;
+  }
+  
