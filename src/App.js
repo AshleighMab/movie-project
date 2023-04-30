@@ -7,7 +7,8 @@ import LoginRegisterToggle from './components/LoginRegisterToggle';
 
 function App() {
   return (
-   <LoginRegisterToggle></LoginRegisterToggle>
+  //  <LoginRegisterToggle></LoginRegisterToggle>
+  <MovieTable/>
   );
 }
 

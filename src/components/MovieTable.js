@@ -64,7 +64,7 @@ const MovieTable = () => {
           <>
             <button onClick={() => handleView(row)}>View</button>
             <button onClick={() => handleEdit(row)}>Edit</button>
-             <button onClick={() => handleDeleteClick(row)} > Delete</button>
+              <Button type="link"  onClick={() => handleDeleteClick(row)} > Delete</Button>
           </>
         ),
       },
@@ -107,13 +107,28 @@ const MovieTable = () => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        handleDelete(row);
+        confirmDelete(row);
       },
     });
   };
 
-
+ 
   const handleDelete = async (row) => {
+    try {
+      const response = await fetch(
+        `https://localhost:44311/api/services/app/Movie/Delete?Id=${row.original.id}`,
+        { method: 'DELETE' }
+      );
+      if (!response.ok) {
+        throw new Error('Failed to delete movie');
+      }
+      setMovies((prevMovies) => prevMovies.filter((movie) => movie.id !== row.original.id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const confirmDelete = async (row) => {
     try {
       const response = await fetch(
         `https://localhost:44311/api/services/app/Movie/Delete?Id=${row.original.id}`,
@@ -170,7 +185,7 @@ const MovieTable = () => {
         {selectedMovie ? (
           <MovieDetails movie={selectedMovie} onBackClick={handleBack} />
         ) : (
-          <table {...getTableProps()} style={{ marginTop: "100px", border: "solid 1px blue" }}>
+          <table {...getTableProps()} style={{ marginTop: "100px",  marginBottom: "100px", border: "solid 1px blue" }}>
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
