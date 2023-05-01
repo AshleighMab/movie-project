@@ -8,7 +8,7 @@ import MovieTable from './components/TableMovie';
 function App() {
   return (
   //  <LoginRegisterToggle></LoginRegisterToggle>
-  <MovieTable/>
+  <LoginRegisterToggle/>
   );
 }
 

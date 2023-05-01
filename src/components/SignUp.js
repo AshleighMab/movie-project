@@ -1,6 +1,6 @@
 import { Form, Input, Button, Select } from 'antd';
 import React, { useState } from 'react';
-import MovieTable from './MovieTable';
+import MovieTable from './TableMovie';
 import './SignUp.css';
 
 const SignUp = ({ onFormSwitch }) => {
@@ -12,15 +12,14 @@ const SignUp = ({ onFormSwitch }) => {
     const [phoneNumber, setNumber] = useState('');
     const [emailAddress, setEmail] = useState('');
     const [gender, setGender] = useState('');
- 
-
-    const onFinish = (values) => {
+    const [loading, setLoading] = useState(false);
 
 
-
+    const onFinish = async (values) => {
+        setLoading(true);
         console.log('Received values:', values);
 
-        const person = { userName, name, surname, password, phoneNumber, emailAddress, gender }
+        const person = { userName, name, surname, password, phoneNumber, emailAddress, gender };
         // Send a POST request to the API endpoint with the form data
         fetch('https://localhost:44311/api/services/app/Person/Create', {
             method: 'POST',
@@ -29,16 +28,23 @@ const SignUp = ({ onFormSwitch }) => {
             },
             body: JSON.stringify(person),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setAuthenticated(true); // Set the authenticated state to true
+            .then((response) => {
+                if (response.ok) {
+                    setAuthenticated(true);// Set the authenticated state to true
+                } else {
+                    console.log('Failed to create person');
+                    alert('Failed to create person');// Show an alert if person is not successfully created
+                    setAuthenticated(false);
+                }
+                setLoading(false);
             })
             .catch((error) => {
                 console.error(error);
-                setAuthenticated(false);
+                setLoading(false);
+                alert('An error occurred while creating the person');// Show an alert if an error occurs while creating the person
             });
     };
+
 
     return (
         <div>
@@ -46,7 +52,7 @@ const SignUp = ({ onFormSwitch }) => {
                 <MovieTable />
             ) : (
                 <div className="form-container">
-                    <Form name="form_item_path" layout="vertical" onFinish={onFinish}>
+                    <Form className="signup-form" layout="vertical" onFinish={onFinish}>
                         <Form.Item name="userName" label="UserName">
                             <Input value={userName} onChange={e => setUserName(e.target.value)} />
                         </Form.Item>

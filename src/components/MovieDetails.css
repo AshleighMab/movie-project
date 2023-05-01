@@ -1,0 +1,33 @@
+.button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-Radius: 5px;
+    margin-Right: 10px;
+    cursor: pointer;
+    font-Weight: bold;
+    box-Shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+    text-Shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.wrapper {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 10px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button-group {
+    text-align: center;
+  }
+  
+ 

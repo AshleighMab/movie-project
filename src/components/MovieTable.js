@@ -64,7 +64,7 @@ const MovieTable = () => {
           <>
             <button onClick={() => handleView(row)}>View</button>
             <button onClick={() => handleEdit(row)}>Edit</button>
-              <Button type="link"  onClick={() => handleDeleteClick(row)} > Delete</Button>
+            <Button type="link" onClick={() => handleDeleteClick(row)} > Delete</Button>
           </>
         ),
       },
@@ -76,9 +76,9 @@ const MovieTable = () => {
     let filtered = movies;
     if (searchQuery) {
       filtered = filtered.filter((movie) =>
-      movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      movie.starring.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      movie.duration.toString().includes(searchQuery.toLowerCase())
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        movie.starring.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        movie.duration.toString().includes(searchQuery.toLowerCase())
       );
     }
     if (categoryFilter) {
@@ -112,7 +112,7 @@ const MovieTable = () => {
     });
   };
 
- 
+
   const handleDelete = async (row) => {
     try {
       const response = await fetch(
@@ -156,14 +156,14 @@ const MovieTable = () => {
 
   return (
     <div>
-        <h1 style={{  display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES</h1>
+      <h1 style={{ display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES</h1>
 
-        <div style={{  display: "flex", justifyContent: "center", marginTop: "30px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
         <div showModal >
-        <button style={{ marginRight: "30px" }}  onClick={handleAdd}>{<AddMovieModal />}</button>
-      
+          <button style={{ marginRight: "30px" }} onClick={handleAdd}>{<AddMovieModal />}</button>
+
         </div>
-        <div style={{marginRight: "50px" }}>
+        <div style={{ marginRight: "50px" }}>
           <label htmlFor="search">Search:</label>
           <input type="text" id="search" name="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
@@ -179,13 +179,13 @@ const MovieTable = () => {
           </select>
         </div>
 
-      
+
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         {selectedMovie ? (
           <MovieDetails movie={selectedMovie} onBackClick={handleBack} />
         ) : (
-          <table {...getTableProps()} style={{ marginTop: "100px",  marginBottom: "100px", border: "solid 1px blue" }}>
+          <table {...getTableProps()} style={{ marginTop: "100px", marginBottom: "100px", border: "solid 1px blue" }}>
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>

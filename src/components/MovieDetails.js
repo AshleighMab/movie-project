@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import './MovieDetails.css'
 
 const MovieDetails = ({ movie, onBackClick }) => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -37,15 +38,18 @@ const MovieDetails = ({ movie, onBackClick }) => {
 
   useEffect(() => {
     if (shouldReload) {
-      // Reload the component
+    
       window.location.reload();
     }
   }, [shouldReload]);
 
   if (isEditMode) {
     return (
-      <div style={{ justifyContent: "center", marginTop: "30px" }}>
+
+      <div style={{ marginTop: "30px" }}>
+      <div className="wrapper" style={{ justifyContent: "center"}}>
         <h2>
+        Movie Name:{" "}
           <input
             type="text"
             name="title"
@@ -90,22 +94,37 @@ const MovieDetails = ({ movie, onBackClick }) => {
             ))}
           </select>
         </p>
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={() => setIsEditMode(false)}>Cancel</button>
+      
+      </div>
+        <div className="button-group" style={{ marginTop: "40px"}}>
+        <button className="button" onClick={handleSubmit}>Submit</button>
+        <button className="button" onClick={() => setIsEditMode(false)}>Cancel</button>
+      </div>
+
       </div>
     );
   }
 
   return (
     <div style={{ justifyContent: "center", marginTop: "30px" }}>
+     
+      <div className="wrapper">
+
       <h2>{movie.title}</h2>
       <p>Duration: {movie.duration}</p>
       <p>Description: {movie.description}</p>
       <p>Starring: {movie.starring}</p>
       <p>Category: {movie.category}</p>
-      <button onClick={() => setIsEditMode(true)}>Edit</button>
-      <button onClick={onBackClick}>Back</button>
+      </div>
+
+      <div className="button-group"   style={{ marginTop: "40px"}}>
+     
+     <button className="button" onClick={() => setIsEditMode(true)}>Edit</button>
+     <button className="button" onClick={onBackClick}>Back</button>
+     </div> 
     </div>
+
+    
   );
 };
 

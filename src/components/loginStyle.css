@@ -3,11 +3,101 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
-  
-  .login-form {
-    justify-content: center;
-    width: 500px;
-    padding: 50px;
-  }
-  
+}
+
+.login-form {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    /* updated to white */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form-button {
+    width: 100%;
+    background-color: #ffa000;
+    /* updated to #ffa000 */
+    border-color: #ffa000;
+    /* updated to #ffa000 */
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-forgot:hover {
+    text-decoration: underline;
+}
+
+.ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+}
+
+.ant-input {
+    background-color: #fff;
+}
+
+.ant-input-affix-wrapper .ant-input-prefix,
+.ant-input-affix-wrapper .ant-input-suffix {
+    background-color: #fff;
+
+}
+
+.ant-form-item-has-error .ant-input-affix-wrapper .ant-input-prefix,
+.ant-form-item-has-error .ant-input-affix-wrapper .ant-input-suffix {
+    color: #ff4d4f;
+}
+
+.ant-input-affix-wrapper:focus-within {
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.login-form-forgot:hover {
+    color: #1890ff;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-forgot a {
+    color: #999;
+}
+
+.login-form-forgot a:hover {
+    color: #1890ff;
+}
+
+.login-form-button:hover {
+    background-color: #ffca28;
+    /* updated to #ffca28 */
+    border-color: #ffca28;
+    /* updated to #ffca28 */
+}
+
+.login-form-button:active,
+.login-form-button:focus {
+    background-color: #ff8f00;
+    /* updated to #ff8f00 */
+    border-color: #ff8f00;
+    /* updated to #ff8f00 */
+}
+
+.ant-form-item-has-error .ant-form-item-explain {
+    margin-top: 5px;
+    color: #ff4d4f;
+}
+
+.ant-form-item-has-success .ant-form-item-explain {
+    margin-top: 5px;
+    color: #52c41a;
+}
+
+.login-form-button[disabled] {
+    background-color: #d9d9d9;
+    border-color: #d9d9d9;
+}

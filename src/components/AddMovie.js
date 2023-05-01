@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button, Modal, Input, Typography, Select } from 'antd';
+import './MovieDetails.css'
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -27,7 +28,6 @@ const AddMovieModal = () => {
 
     const movie = { title, duration, starring, category, description };
 
-    // Make a fetch API call to add the movie to the database
     fetch('https://localhost:44311/api/services/app/Movie/Create', {
       method: 'POST',
       headers: {
@@ -35,18 +35,18 @@ const AddMovieModal = () => {
       },
       body: JSON.stringify(movie)
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      setOpen(false);
-      setConfirmLoading(false);
-      window.location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      setModalText('Failed to add movie');
-      setConfirmLoading(false);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        setOpen(false);
+        setConfirmLoading(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setModalText('Failed to add movie');
+        setConfirmLoading(false);
+      });
   };
 
   const handleCancel = () => {
@@ -56,7 +56,8 @@ const AddMovieModal = () => {
 
   return (
     <>
-      <Button onClick={showModal}>
+      <Button className='button' style={{ marginTop:"-5px", display: "flex", justifyContent: "center", alignItems: "center", textAlign: "center",
+      }} onClick={showModal}>
         Add Movie
       </Button>
       <Modal
@@ -73,13 +74,13 @@ const AddMovieModal = () => {
         <Title level={4}>Starring:</Title>
         <Input placeholder="Starring" value={starring} onChange={e => setStarring(e.target.value)} />
         <Title level={4}>Category:</Title>
-        <Select placeholder="Category" value={category} onChange={value => setCategory(value)}>
-  <Option value="Action">Action</Option>
-  <Option value="Comedy">Comedy</Option>
-  <Option value="Drama">Drama</Option>
-  <Option value="Musical">Musical</Option>
-  <Option value="Thriller">Thriller</Option>
-</Select>
+        <Select style={{ width: 200 }} placeholder="Category" value={category} onChange={value => setCategory(value)}>
+          <Option value="Action">Action</Option>
+          <Option value="Comedy">Comedy</Option>
+          <Option value="Drama">Drama</Option>
+          <Option value="Musical">Musical</Option>
+          <Option value="Thriller">Thriller</Option>
+        </Select>
         <Title level={4}>Description:</Title>
         <TextArea placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
         <p>{modalText}</p>

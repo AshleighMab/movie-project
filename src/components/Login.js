@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import MovieTable from './MovieTable';
+import MovieTable from './TableMovie';
 import './loginStyle.css'; // import your CSS file here\
-import LoginRegisterToggle from './LoginRegisterToggle';
+
 
 function Login({ onFormSwitch }) {
   const [loading, setLoading] = useState(false);
@@ -47,9 +47,10 @@ function Login({ onFormSwitch }) {
             className="login-form"
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            style={{ border: "1px solid blue" }}
+
           >
             <Form.Item
+
               name="UserNameOrEmailAddress"
               rules={[{ required: true, message: 'Please input your Email!' }]}
             >

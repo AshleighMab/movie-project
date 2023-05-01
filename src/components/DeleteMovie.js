@@ -2,23 +2,23 @@ import { Button, message, Popconfirm } from 'antd';
 
 
 const confirm = (e) => {
-  console.log(e);
-  message.success('Click on Yes');
+    console.log(e);
+    message.success('Click on Yes');
 };
 const cancel = (e) => {
-  console.log(e);
-  message.error('Click on No');
+    console.log(e);
+    message.error('Click on No');
 };
 const App = () => (
-  <Popconfirm
-    title="Delete the task"
-    description="Are you sure to delete this task?"
-    onConfirm={confirm}
-    onCancel={cancel}
-    okText="Yes"
-    cancelText="No"
-  >
-    <Button type="link">Delete</Button>
-  </Popconfirm>
+    <Popconfirm
+        title="Delete the task"
+        description="Are you sure to delete this task?"
+        onConfirm={confirm}
+        onCancel={cancel}
+        okText="Yes"
+        cancelText="No"
+    >
+        <Button type="link">Delete</Button>
+    </Popconfirm>
 );
 export default App;
