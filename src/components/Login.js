@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import MovieTable from './TableMovie';
 import './loginStyle.css'; // import your CSS file here\
-
+import ClapperboardColor from './ClapperboardColor.svg.png';
 
 function Login({ onFormSwitch }) {
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,6 @@ function Login({ onFormSwitch }) {
   const onFinish = async (values) => {
     setLoading(true);
 
-    // Make an API call to verify the user's credentials
     const response = await fetch('https://localhost:44311/api/TokenAuth/Authenticate', {
       method: 'POST',
       headers: {
@@ -38,17 +37,23 @@ function Login({ onFormSwitch }) {
   return (
     <div>
       {isLoginForm}
+
+
       {authenticated ? (
         <MovieTable />
       ) : (
-        <div className="form-container">
+
+        <div class="form-wrapper">
+          <div class="clapperboard-container">
+            <img src={ClapperboardColor} alt="clapperboard" className="clapperboard" />
+          </div>
+
           <Form
             name="normal_login"
             className="login-form"
             initialValues={{ remember: true }}
             onFinish={onFinish}
-
-          >
+            class="login-form">
             <Form.Item
 
               name="UserNameOrEmailAddress"

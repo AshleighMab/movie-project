@@ -5,7 +5,7 @@ import AddMovieModal from "./AddMovie";
 import { Modal } from 'antd';
 import './TableMovie.css'
 
-import { Button, message, Popconfirm } from 'antd';
+import { Button, message } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const MovieTable = () => {
@@ -61,7 +61,7 @@ const MovieTable = () => {
                 Cell: ({ row }) => (
                     <>
                         <button onClick={() => handleView(row)}>View</button>
-                        <button onClick={() => handleEdit(row)}>Edit</button>
+                        <button onClick={() => handleView(row)}>Edit</button>
                         <Button type="link" onClick={() => handleDeleteClick(row)} > Delete</Button>
                     </>
                 ),
@@ -90,7 +90,9 @@ const MovieTable = () => {
     };
 
     const handleEdit = (row) => {
+
         setEditingMovie(row.original);
+
     };
 
     const handleBack = () => {
@@ -160,13 +162,13 @@ const MovieTable = () => {
         canNextPage,
         canPreviousPage,
         pageOptions,
-        state: { pageIndex, pageSize }, // <-- use pageIndex from the state object
+        state: { pageIndex, pageSize },
         prepareRow,
     } = useTable(
         {
             columns,
             data: filteredMovies,
-            initialState: { pageIndex: 0, pageSize: 3 },
+            initialState: { pageIndex: 0, pageSize: 4 },
         },
         usePagination
     );
@@ -174,76 +176,83 @@ const MovieTable = () => {
     return (
 
         <div>
-        <h1 style={{ display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES</h1>
-      
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
-          <div showModal>
-            <div style={{ marginRight: "30px" }} onClick={handleAdd}>{<AddMovieModal />}</div>
-          </div>
-          <div style={{ marginRight: "50px" }}>
-            <label htmlFor="search">Search:</label>
-            <input type="text" id="search" name="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-          </div>
-          <div>
-            <label htmlFor="category">Filter by category:</label>
-            <select id="category" name="category" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-              <option value="">All</option>
-              <option value="Action">Action</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Drama">Drama</option>
-              <option value="Musical">Musical</option>
-              <option value="Thriller">Thriller</option>
-            </select>
-          </div>
+            <h1 style={{ display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES</h1>
+
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+                <div showModal>
+                    <div style={{ marginRight: "30px" }} onClick={handleAdd}>{<AddMovieModal />}</div>
+                </div>
+                <div style={{ marginRight: "50px" }}>
+                    <label htmlFor="search">Search:</label>
+                    <input type="text" id="search" name="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor="category">Filter by category:</label>
+                    <select id="category" name="category" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+                        <option value="">All</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Musical">Musical</option>
+                        <option value="Thriller">Thriller</option>
+                    </select>
+                </div>
+                <div>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                    </Button>
+
+                </div>
+
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                {selectedMovie ? (
+                    <MovieDetails movie={selectedMovie} onBackClick={handleBack} initialMode="view" />
+                ) : (
+                    <table {...getTableProps()}>
+                        <thead>
+                            {headerGroups.map((headerGroup) => (
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                    {headerGroup.headers.map((column) => (
+                                        <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                            {page.map((row, i) => {
+                                prepareRow(row);
+                                return (
+                                    <tr {...row.getRowProps()}>
+                                        {row.cells.map((cell) => {
+                                            return (
+                                                <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+
+            {selectedMovie || !data.length ? null : (
+                <div className="pagination" style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+                    <button className="darkbutton" onClick={() => previousPage()}>
+                        Previous
+                    </button>{" "}
+                    <span style={{ color: "white", marginTop: "5px ", marginRight: "10px" }}>
+                        Page <strong>{pageIndex + 1}</strong> of <strong>{pageOptions.length}</strong>
+                    </span>
+                    <button className="darkbutton" onClick={() => nextPage()}>
+                        Next
+                    </button>{" "}
+                </div>
+            )}
         </div>
-      
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          {selectedMovie ? (
-            <MovieDetails movie={selectedMovie} onBackClick={handleBack} />
-          ) : (
-            <table {...getTableProps()}>
-              <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
-        </div>
-      
-        {selectedMovie || !data.length ? null : (
-          <div className="pagination" style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-            <button className="darkbutton" onClick={() => previousPage()}>
-              Previous
-            </button>{" "}
-            <span style={{ color: "white", marginTop: "5px ", marginRight:"10px" }}>
-              Page <strong>{pageIndex + 1}</strong> of <strong>{pageOptions.length}</strong>
-            </span>
-            <button className="darkbutton" onClick={() => nextPage()}>
-              Next
-            </button>{" "}
-          </div>
-        )}
-      </div>
-      
+
 
     );
 };

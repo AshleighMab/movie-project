@@ -20,7 +20,7 @@ const SignUp = ({ onFormSwitch }) => {
         console.log('Received values:', values);
 
         const person = { userName, name, surname, password, phoneNumber, emailAddress, gender };
-        // Send a POST request to the API endpoint with the form data
+   
         fetch('https://localhost:44311/api/services/app/Person/Create', {
             method: 'POST',
             headers: {
@@ -30,10 +30,10 @@ const SignUp = ({ onFormSwitch }) => {
         })
             .then((response) => {
                 if (response.ok) {
-                    setAuthenticated(true);// Set the authenticated state to true
+                    setAuthenticated(true);
                 } else {
                     console.log('Failed to create person');
-                    alert('Failed to create person');// Show an alert if person is not successfully created
+                    alert('Failed to create person');
                     setAuthenticated(false);
                 }
                 setLoading(false);
@@ -41,7 +41,7 @@ const SignUp = ({ onFormSwitch }) => {
             .catch((error) => {
                 console.error(error);
                 setLoading(false);
-                alert('An error occurred while creating the person');// Show an alert if an error occurs while creating the person
+                alert('An error occurred while creating the person');
             });
     };
 

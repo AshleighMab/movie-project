@@ -2,25 +2,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 60vh;
 }
 
 .login-form {
     max-width: 400px;
     width: 100%;
     padding: 20px;
+    margin-top: 40px;
     border-radius: 5px;
     background-color: #fff;
-    /* updated to white */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+  }
+  
 
 .login-form-button {
     width: 100%;
     background-color: #ffa000;
-    /* updated to #ffa000 */
     border-color: #ffa000;
-    /* updated to #ffa000 */
 }
 
 .login-form-forgot {
@@ -74,17 +73,13 @@
 
 .login-form-button:hover {
     background-color: #ffca28;
-    /* updated to #ffca28 */
     border-color: #ffca28;
-    /* updated to #ffca28 */
 }
 
 .login-form-button:active,
 .login-form-button:focus {
     background-color: #ff8f00;
-    /* updated to #ff8f00 */
     border-color: #ff8f00;
-    /* updated to #ff8f00 */
 }
 
 .ant-form-item-has-error .ant-form-item-explain {
@@ -100,4 +95,23 @@
 .login-form-button[disabled] {
     background-color: #d9d9d9;
     border-color: #d9d9d9;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .clapperboard-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+
+.clapperboard {
+  width: 170px;
 }

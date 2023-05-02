@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import './MovieDetails.css'
 
-const MovieDetails = ({ movie, onBackClick }) => {
-  const [isEditMode, setIsEditMode] = useState(false);
+const MovieDetails = ({ movie, onBackClick, initialMode = "view" }) => {
+  const [isEditMode, setIsEditMode] = useState(initialMode === "edit");
   const [updatedMovie, setUpdatedMovie] = useState(movie);
   const [shouldReload, setShouldReload] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(movie.category);
-
+  console.log(movie);
   const categories = ["Action", "Drama", "Comedy", "Thriller", "Romance"];
 
   const handleInputChange = (event) => {
@@ -38,7 +38,7 @@ const MovieDetails = ({ movie, onBackClick }) => {
 
   useEffect(() => {
     if (shouldReload) {
-    
+
       window.location.reload();
     }
   }, [shouldReload]);
@@ -47,59 +47,59 @@ const MovieDetails = ({ movie, onBackClick }) => {
     return (
 
       <div style={{ marginTop: "30px" }}>
-      <div className="wrapper" style={{ justifyContent: "center"}}>
-        <h2>
-        Movie Name:{" "}
-          <input
-            type="text"
-            name="title"
-            value={updatedMovie.title}
-            onChange={handleInputChange}
-          />
-        </h2>
-        <p>
-          Duration:{" "}
-          <input
-            type="text"
-            name="duration"
-            value={updatedMovie.duration}
-            onChange={handleInputChange}
-          />
-        </p>
-        <p>
-          Description:{" "}
-          <input
-            type="text"
-            name="description"
-            value={updatedMovie.description}
-            onChange={handleInputChange}
-          />
-        </p>
-        <p>
-          Starring:{" "}
-          <input
-            type="text"
-            name="starring"
-            value={updatedMovie.starring}
-            onChange={handleInputChange}
-          />
-        </p>
-        <p>
-          Category:{" "}
-          <select value={selectedCategory} onChange={handleCategoryChange}>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </p>
-      
-      </div>
-        <div className="button-group" style={{ marginTop: "40px"}}>
-        <button className="button" onClick={handleSubmit}>Submit</button>
-        <button className="button" onClick={() => setIsEditMode(false)}>Cancel</button>
-      </div>
+        <div className="wrapper" style={{ justifyContent: "center" }}>
+          <h2>
+            Movie Name:{" "}
+            <input
+              type="text"
+              name="title"
+              value={updatedMovie.title}
+              onChange={handleInputChange}
+            />
+          </h2>
+          <p>
+            Duration:{" "}
+            <input
+              type="text"
+              name="duration"
+              value={updatedMovie.duration}
+              onChange={handleInputChange}
+            />
+          </p>
+          <p>
+            Description:{" "}
+            <input
+              type="text"
+              name="description"
+              value={updatedMovie.description}
+              onChange={handleInputChange}
+            />
+          </p>
+          <p>
+            Starring:{" "}
+            <input
+              type="text"
+              name="starring"
+              value={updatedMovie.starring}
+              onChange={handleInputChange}
+            />
+          </p>
+          <p>
+            Category:{" "}
+            <select value={selectedCategory} onChange={handleCategoryChange}>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </p>
+
+        </div>
+        <div className="button-group" style={{ marginTop: "40px" }}>
+          <button className="button" style={{ boxShadow: " 0px 0px 5px green" }} onClick={handleSubmit}>Submit</button>
+          <button className="button" onClick={() => setIsEditMode(false)}>Cancel</button>
+        </div>
 
       </div>
     );
@@ -107,24 +107,23 @@ const MovieDetails = ({ movie, onBackClick }) => {
 
   return (
     <div style={{ justifyContent: "center", marginTop: "30px" }}>
-     
-      <div className="wrapper">
 
-      <h2>{movie.title}</h2>
-      <p>Duration: {movie.duration}</p>
-      <p>Description: {movie.description}</p>
-      <p>Starring: {movie.starring}</p>
-      <p>Category: {movie.category}</p>
-      </div>
+<div className="wrapper">
 
-      <div className="button-group"   style={{ marginTop: "40px"}}>
-     
-     <button className="button" onClick={() => setIsEditMode(true)}>Edit</button>
-     <button className="button" onClick={onBackClick}>Back</button>
-     </div> 
-    </div>
+  <h2>{movie.title}</h2>
+  <p><strong>Duration:</strong> {movie.duration}</p>
+  <p><strong>Description:</strong> {movie.description}</p>
+  <p><strong>Starring:</strong> {movie.starring}</p>
+  <p><strong>Category:</strong> {movie.category}</p>
+</div>
 
-    
+<div className="button-group" style={{ marginTop: "40px" }}>
+
+  <button className="button" style={{ boxShadow: " 0px 0px 5px green" }} onClick={() => setIsEditMode(true)}>Edit</button>
+  <button className="button" onClick={onBackClick}>Back</button>
+</div>
+
+</div>
   );
 };
 
