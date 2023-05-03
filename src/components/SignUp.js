@@ -51,7 +51,7 @@ const SignUp = ({ onFormSwitch }) => {
             {authenticated ? (
                 <MovieTable />
             ) : (
-                <div className="form-container">
+                <div className="form-container" style={{marginTop:"-30px"}}>
                     <Form className="signup-form" layout="vertical" onFinish={onFinish}>
                         <Form.Item name="userName" label="UserName">
                             <Input value={userName} onChange={e => setUserName(e.target.value)} />

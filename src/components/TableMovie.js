@@ -15,6 +15,7 @@ const MovieTable = () => {
     const [categoryFilter, setCategoryFilter] = useState("");
     const [editingMovie, setEditingMovie] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [log, setLogout] = useState("");
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -95,6 +96,9 @@ const MovieTable = () => {
 
     };
 
+    const handleLogout = () => {
+        window.location.reload();
+    }
     const handleBack = () => {
         setSelectedMovie(null);
     };
@@ -176,7 +180,13 @@ const MovieTable = () => {
     return (
 
         <div>
-            <h1 style={{ display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES</h1>
+            <div>
+                <h1 style={{ display: "flex", justifyContent: "center", marginTop: "30px" }} >MOVIES </h1>
+
+
+            </div>
+
+
 
             <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
                 <div showModal>
@@ -197,12 +207,7 @@ const MovieTable = () => {
                         <option value="Thriller">Thriller</option>
                     </select>
                 </div>
-                <div>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
-                        Log in
-                    </Button>
 
-                </div>
 
             </div>
 
@@ -249,8 +254,13 @@ const MovieTable = () => {
                     <button className="darkbutton" onClick={() => nextPage()}>
                         Next
                     </button>{" "}
+
                 </div>
             )}
+
+            <Button onClick={handleLogout} style={{ marginLeft: "1380px", justifyContent: "right", }} type="primary" htmlType="submit">
+                Log out
+            </Button>
         </div>
 
 
