@@ -36,6 +36,7 @@ const AddMovieModal = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(movie)
+      
     })
       .then(response => response.json())
       .then(data => {
