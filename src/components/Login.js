@@ -21,6 +21,7 @@ function Login({ onFormSwitch }) {
       body: JSON.stringify(values),
     });
 
+    
     if (response.ok) {
       console.log(response);
       console.log(response.accessToken);
