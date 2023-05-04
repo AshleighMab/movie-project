@@ -9,7 +9,7 @@ function Login({ onFormSwitch }) {
   const [loading, setLoading] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [isLoginForm, setIsLoginForm] = useState(true);
-
+  const [error, setError] = useState(null);
   const onFinish = async (values) => {
     setLoading(true);
 
@@ -19,17 +19,19 @@ function Login({ onFormSwitch }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(values),
-    }).then((response) => {
-      if (response.ok) {
-        console.log(response);
-        console.log(response.accessToken);
-        localStorage.setItem("objLogin", JSON.stringify(response));
-        setAuthenticated(true);
-      } else {
-        console.log("Buy");
-        alert("Failed to Login!!! Please check your email or password");
-      }
     });
+
+    if (response.ok) {
+      console.log(response);
+      console.log(response.accessToken);
+      localStorage.setItem("objLogin", JSON.stringify(response));
+      setAuthenticated(true);
+      setError(true); // clear the error message
+    } else {
+      console.log("Buy");
+      const errorResponse = await response.json();
+      setError(errorResponse.error.message); // set the error message
+    }
 
     setLoading(false);
   };
@@ -64,6 +66,8 @@ function Login({ onFormSwitch }) {
             <Form.Item
               name="password"
               rules={[{ required: true, message: 'Please input your Password!' }]}
+              validateStatus={error ? 'error' : ''}
+              help={error}
             >
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
